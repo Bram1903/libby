@@ -125,7 +125,7 @@ public abstract class LibraryManager {
     @Deprecated
     protected LibraryManager(@NotNull LogAdapter logAdapter, @NotNull Path dataDirectory) {
         logger = new Logger(requireNonNull(logAdapter, "logAdapter"));
-        saveDirectory = requireNonNull(dataDirectory, "dataDirectory").toAbsolutePath().resolve("lib");
+        saveDirectory = requireNonNull(dataDirectory, "dataDirectory").toAbsolutePath().resolve("libs");
     }
 
     /**
@@ -506,7 +506,6 @@ public abstract class LibraryManager {
                     return null;
                 }
 
-                logger.info("Downloaded library " + connection.getURL());
                 return out.toByteArray();
             }
         } catch (MalformedURLException e) {
@@ -669,8 +668,6 @@ public abstract class LibraryManager {
             relocator.relocate(in, tmpOut, relocations);
             Files.move(tmpOut, file);
 
-            logger.info("Relocations applied to " + in.getFileName());
-
             return file;
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -715,7 +712,6 @@ public abstract class LibraryManager {
      * @see #downloadLibrary(Library)
      */
     public void loadLibrary(@NotNull Library library) {
-        logger.info("Loading library " + library);
         Path file = downloadLibrary(requireNonNull(library, "library"));
         if (library.resolveTransitiveDependencies()) {
             resolveTransitiveLibraries(library);

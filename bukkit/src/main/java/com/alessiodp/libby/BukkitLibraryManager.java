@@ -30,7 +30,7 @@ public class BukkitLibraryManager extends LibraryManager {
      * @param plugin the plugin to manage
      */
     public BukkitLibraryManager(@NotNull Plugin plugin) {
-        this(plugin, "lib");
+        this(plugin, "libs");
     }
 
     /**
